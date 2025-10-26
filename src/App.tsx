@@ -95,14 +95,7 @@ export default function App() {
   }
 
   return (
-    <div 
-      className="min-h-screen" 
-      style={{ 
-        background: isDarkMode 
-          ? 'linear-gradient(180deg, #000000 0%, #4B0082 100%)' 
-          : 'linear-gradient(180deg, #6b7280 0%, #4b5563 100%)' 
-      }}
-    >
+    <div className="min-h-screen">
       <div className="max-w-md mx-auto min-h-screen relative">
         <AppHeader 
           greeting={getGreeting()}

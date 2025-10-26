@@ -192,9 +192,9 @@ export function BahrainMap() {
       </Card>
 
       {/* Map Container */}
-      <Card className="p-0 bg-[#0D0D0D] border-border/50 overflow-hidden">
+      <Card className="p-0 border-border/50 overflow-hidden" style={{ backgroundColor: 'var(--map-background)' }}>
         {/* Map Header */}
-        <div className="flex items-center justify-between p-3 bg-[#1a1a1a] border-b border-white/10">
+        <div className="flex items-center justify-between p-3 border-b border-white/10" style={{ backgroundColor: 'var(--map-header)' }}>
           <div className="flex items-center gap-2">
             <MapPin className="w-5 h-5 text-[#81D8D0]" />
             <h3 className="text-white">Interactive Map</h3>
@@ -204,31 +204,31 @@ export function BahrainMap() {
               variant="outline"
               size="sm"
               onClick={handleZoomOut}
-              className="w-8 h-8 p-0 bg-[#2a2a2a] border-white/20 hover:bg-[#3a3a3a]"
+              className="w-8 h-8 p-0 border-white/20"
             >
-              <ZoomOut className="w-4 h-4 text-white" />
+              <ZoomOut className="w-4 h-4" />
             </Button>
             <Button
               variant="outline"
               size="sm"
               onClick={handleZoomIn}
-              className="w-8 h-8 p-0 bg-[#2a2a2a] border-white/20 hover:bg-[#3a3a3a]"
+              className="w-8 h-8 p-0 border-white/20"
             >
-              <ZoomIn className="w-4 h-4 text-white" />
+              <ZoomIn className="w-4 h-4" />
             </Button>
             <Button
               variant="outline"
               size="sm"
               onClick={handleReset}
-              className="w-8 h-8 p-0 bg-[#2a2a2a] border-white/20 hover:bg-[#3a3a3a]"
+              className="w-8 h-8 p-0 border-white/20"
             >
-              <Maximize2 className="w-4 h-4 text-white" />
+              <Maximize2 className="w-4 h-4" />
             </Button>
           </div>
         </div>
 
         {/* Map Area */}
-        <div className="relative w-full h-[600px] overflow-hidden bg-[#0D0D0D]">
+        <div className="relative w-full h-[600px] overflow-hidden" style={{ backgroundColor: 'var(--map-background)' }}>
           {/* Map Image Background */}
           <div
             className="absolute inset-0 transition-transform duration-300 ease-out"
@@ -324,10 +324,9 @@ export function BahrainMap() {
                     
                     {/* Location label */}
                     <div
-                      className={`absolute top-10 left-1/2 -translate-x-1/2 whitespace-nowrap px-2 py-1 rounded text-xs font-semibold ${
-                        location.visited ? 'text-[#81D8D0]' : 'text-white'
-                      }`}
+                      className="map-location-label absolute top-10 left-1/2 -translate-x-1/2 whitespace-nowrap px-2 py-1 rounded text-xs font-semibold"
                       style={{
+                        color: location.visited ? '#81D8D0' : 'white',
                         textShadow: '0 2px 8px rgba(0, 0, 0, 0.9)',
                         backgroundColor: 'rgba(0, 0, 0, 0.6)',
                         backdropFilter: 'blur(4px)',
@@ -343,7 +342,7 @@ export function BahrainMap() {
           </div>
 
           {/* Legend */}
-          <div className="absolute bottom-4 left-4 bg-black/80 backdrop-blur-sm px-4 py-3 rounded-lg text-xs text-white space-y-2 border border-white/10">
+          <div className="map-legend absolute bottom-4 left-4 bg-black/80 backdrop-blur-sm px-4 py-3 rounded-lg text-xs text-white space-y-2 border border-white/10">
             <p className="flex items-center gap-2">
               <span className="inline-block w-4 h-4 bg-[#81D8D0] rounded-full border-2 border-white"></span>
               <span>Visited areas</span>
@@ -359,14 +358,14 @@ export function BahrainMap() {
           </div>
 
           {/* Zoom indicator */}
-          <div className="absolute top-4 right-4 bg-black/80 backdrop-blur-sm px-3 py-2 rounded-lg text-xs text-white border border-white/10">
+          <div className="map-legend absolute top-4 right-4 bg-black/80 backdrop-blur-sm px-3 py-2 rounded-lg text-xs text-white border border-white/10">
             Zoom: {Math.round(zoom * 100)}%
           </div>
         </div>
 
         {/* Map Footer */}
-        <div className="p-3 bg-[#1a1a1a] border-t border-white/10">
-          <p className="text-xs text-center" style={{ color: '#81D8D0' }}>
+        <div className="p-3 border-t border-white/10" style={{ backgroundColor: 'var(--map-header)' }}>
+          <p className="text-xs text-center text-foreground dark:text-[#81D8D0]">
             Tap markers to explore • Pinch or use buttons to zoom • {visitedLocations}/{locations.length} locations discovered
           </p>
         </div>

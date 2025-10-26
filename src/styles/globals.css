@@ -14,7 +14,7 @@
     --popover: #ecfdf5;
     --popover-foreground: #000000;
     --primary: #10b981;
-    --primary-foreground: #000000;
+    --primary-foreground: #ffffff;
     --secondary: #34d399;
     --secondary-foreground: #000000;
     --muted: #d1fae5;
@@ -56,11 +56,13 @@
     --card: #ecfdf5;
     --card-foreground: #000000;
     --primary: #10b981;
-    --primary-foreground: #000000;
+    --primary-foreground: #ffffff;
     --secondary: #34d399;
     --secondary-foreground: #000000;
     --muted: #d1fae5;
     --muted-foreground: #000000;
+    --map-background: #e8f8f5;
+    --map-header: #d1fae5;
   }
 
   /* Dark mode styles */
@@ -103,6 +105,8 @@
     --sidebar-accent-foreground: #ffffff;
     --sidebar-border: rgba(62, 180, 137, 0.3);
     --sidebar-ring: #3EB489;
+    --map-background: #0D0D0D;
+    --map-header: #1a1a1a;
   }
 
   /* Global base styles */
@@ -122,38 +126,136 @@
     background: linear-gradient(180deg, #000000 0%, #4B0082 100%);
   }
 
-  /* Light mode body background */
+  /* Light mode body background - white to mint gradient */
   .light body,
-  html.light {
-    background: linear-gradient(180deg, #ffffff 0%, #d1fae5 50%, #10b981 100%) !important;
+  html.light body {
+    background: linear-gradient(to bottom, #ffffff 0%, #ffffff 20%, #f0fdf4 40%, #d1fae5 70%, #a7f3d0 100%) !important;
+  }
+
+  /* Force black text for most content in light mode - use foreground color */
+  .light h1,
+  .light h2,
+  .light h3,
+  .light h4,
+  .light h5,
+  .light h6,
+  .light p,
+  .light span:not([data-slot="badge"] *):not(button *),
+  .light div:not([data-slot="badge"] *):not(button *) {
+    color: var(--foreground);
+  }
+
+  /* Override text-white in light mode except for buttons and badges */
+  .light .text-white:not(button):not(button *):not([role="button"]):not([role="button"] *):not([data-slot="badge"]):not([data-slot="badge"] *) {
+    color: var(--foreground) !important;
+  }
+
+  /* Light mode badge text - badges use their own color classes from badge.tsx */
+  /* No override needed - let component classes handle it */
+
+  /* Map location labels - force white/cyan in all modes */
+  .map-location-label.text-white {
+    color: white !important;
+  }
+
+  .map-location-label.text-\\[\\#81D8D0\\] {
+    color: #81D8D0 !important;
+  }
+
+  /* Map legend - white background and black text in light mode, dark background and white text in dark mode */
+  .light .map-legend {
+    background-color: rgba(255, 255, 255, 0.9) !important;
+  }
+
+  .light .map-legend,
+  .light .map-legend * {
+    color: black !important;
+  }
+
+  .dark .map-legend,
+  .dark .map-legend * {
+    color: white !important;
+  }
+
+  /* Make modals and dialogs completely opaque in light mode */
+  .light [role="dialog"],
+  .light [data-slot="dialog-content"],
+  .light [data-slot="sheet-content"] {
+    background: #ffffff !important;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+
+  /* Remove green/mint border outline on focus in light mode */
+  .light *:focus,
+  .light *:focus-visible {
+    outline: none !important;
+    box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1) !important;
+  }
+
+  /* Remove focus box-shadow from Help Center dialog buttons */
+  .light [role="dialog"] button:focus,
+  .light [role="dialog"] button:focus-visible,
+  .light [role="dialog"] button {
+    box-shadow: none !important;
+    outline: none !important;
+  }
+
+  /* Fix green border on sheet component in light mode */
+  .light [data-slot="sheet-content"] {
+    border-color: rgba(0, 0, 0, 0.1) !important;
+  }
+
+  .light [data-slot="sheet-content"]:focus,
+  .light [data-slot="sheet-content"]:focus-visible,
+  .light [data-slot="sheet-content"]:focus-within {
+    outline: none !important;
+    box-shadow: none !important;
+    border-color: rgba(0, 0, 0, 0.1) !important;
+  }
+
+  /* Remove green borders from profile sidebar sections in light mode */
+  .light [data-slot="sheet-content"] .border-border,
+  .light [data-slot="sheet-content"] [class*="border-border"] {
+    border-color: rgba(0, 0, 0, 0.1) !important;
+  }
+
+  /* Light mode icons should be visible (black) */
+  .light svg {
+    color: currentColor;
+  }
+
+  .light .text-white svg,
+  .light button:not([variant="mint"]):not([class*="bg-primary"]) svg {
+    color: var(--foreground) !important;
   }
 
   /* Glass effect for cards in light mode ONLY */
   .light [data-slot="card"] {
-    background: hsla(0, 0%, 100%, 0.15) !important;
-    backdrop-filter: blur(0.75em);
-    -webkit-backdrop-filter: blur(0.75em);
-    box-shadow: 0 0 0 0.1em hsla(0, 0%, 100%, 0.3) inset;
-    border: none;
+    background: rgba(255, 255, 255, 0.4) !important;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.6) inset;
+    border: 1px solid rgba(255, 255, 255, 0.3);
   }
 
-  /* Glass effect for popovers and dialogs in light mode ONLY */
-  .light [role="dialog"],
+  /* Glass effect for popovers and menus in light mode ONLY (dialogs are opaque) */
   .light [role="menu"],
   .light [data-slot="popover"] {
-    background: hsla(0, 0%, 100%, 0.15) !important;
-    backdrop-filter: blur(0.75em);
-    -webkit-backdrop-filter: blur(0.75em);
-    box-shadow: 0 0 0 0.1em hsla(0, 0%, 100%, 0.3) inset;
+    background: rgba(255, 255, 255, 0.4) !important;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.6) inset;
+    border: 1px solid rgba(255, 255, 255, 0.3);
   }
 
   /* Bottom Navigation with glass effect in light mode ONLY */
   .light .fixed.bottom-0 {
-    background: hsla(0, 0%, 100%, 0.15) !important;
-    backdrop-filter: blur(0.75em);
-    -webkit-backdrop-filter: blur(0.75em);
-    box-shadow: 0 0 0 0.1em hsla(0, 0%, 100%, 0.3) inset;
-    border-top: none;
+    background: rgba(255, 255, 255, 0.4) !important;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.6) inset;
+    border-top: 1px solid rgba(255, 255, 255, 0.3);
   }
 
   .light .fixed.bottom-0 .text-muted-foreground {
@@ -272,25 +374,26 @@ html {
 .light input,
 .light textarea,
 .light select {
-  background: hsla(0, 0%, 100%, 0.15) !important;
-  backdrop-filter: blur(0.75em);
-  -webkit-backdrop-filter: blur(0.75em);
+  background: rgba(255, 255, 255, 0.4) !important;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   color: #000000 !important;
-  border: none;
-  box-shadow: 0 0 0 0.1em hsla(0, 0%, 100%, 0.3) inset;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.6) inset;
 }
 
 .light input::placeholder,
 .light textarea::placeholder {
-  color: #10b981;
-  opacity: 0.6;
+  color: var(--muted-foreground);
+  opacity: 0.7;
 }
 
 .light input:focus,
 .light textarea:focus,
 .light select:focus {
-  box-shadow: 0 0 0 0.15em hsla(0, 0%, 100%, 0.5) inset;
+  box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.3);
   outline: none;
+  border: 1px solid rgba(16, 185, 129, 0.5);
 }
 
 /* Dark mode input focus - remove mint border */
@@ -304,4 +407,28 @@ html {
 /* Smooth transitions */
 * {
   transition: background 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Hide scrollbars while keeping functionality */
+* {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+}
+
+*::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}
+
+/* Ensure scrolling still works */
+*[class*="overflow-y-auto"],
+*[class*="overflow-x-auto"],
+*[class*="overflow-auto"] {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+*[class*="overflow-y-auto"]::-webkit-scrollbar,
+*[class*="overflow-x-auto"]::-webkit-scrollbar,
+*[class*="overflow-auto"]::-webkit-scrollbar {
+  display: none;
 }

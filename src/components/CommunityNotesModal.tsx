@@ -107,7 +107,7 @@ export function CommunityNotesModal({
             placeholder="Share your experience, tips, or recommendations..."
             value={newNote}
             onChange={(e) => setNewNote(e.target.value)}
-            className="bg-input-background border-border text-white min-h-[80px] resize-none"
+            className="bg-input-background !border-2 !border-primary text-white min-h-[80px] resize-none focus:!border-primary focus:brightness-110 transition-all"
             maxLength={280}
           />
           <div className="flex items-center justify-between">
@@ -121,7 +121,7 @@ export function CommunityNotesModal({
               <Button
                 onClick={handleSubmit}
                 disabled={!newNote.trim()}
-                className="bg-primary hover:bg-primary/90"
+                className="bg-primary hover:bg-primary/90 text-primary-foreground"
               >
                 <Send className="w-4 h-4 mr-2" />
                 Post

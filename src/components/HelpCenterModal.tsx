@@ -260,7 +260,7 @@ export function HelpCenterModal({ isOpen, onClose }: HelpCenterModalProps) {
               <Button
                 variant="outline"
                 onClick={() => setShowChat(true)}
-                className="h-auto p-4 flex flex-col items-center gap-2 border-border hover:bg-accent"
+                className="h-auto p-4 flex flex-col items-center gap-2 !border-none !shadow-none !outline-none backdrop-blur-none"
               >
                 <MessageCircle className="w-6 h-6 text-primary" />
                 <span className="text-sm">AI Chat</span>
@@ -268,9 +268,9 @@ export function HelpCenterModal({ isOpen, onClose }: HelpCenterModalProps) {
               <Button
                 variant="outline"
                 onClick={onClose}
-                className="h-auto p-4 flex flex-col items-center gap-2 border-border hover:bg-accent"
+                className="h-auto p-4 flex flex-col items-center gap-2 !border-none !shadow-none !outline-none backdrop-blur-none"
               >
-                <HelpCircle className="w-6 h-6 text-secondary" />
+                <HelpCircle className="w-6 h-6 text-primary" />
                 <span className="text-sm">Contact Us</span>
               </Button>
             </div>
