@@ -145,8 +145,9 @@ export function ShopScreen() {
         </div>
         <div className="text-right">
           <div className="text-lg font-medium text-primary mb-2">{formatPoints(offer.points)}</div>
-          <Button 
-            size="sm" 
+          <Button
+            size="sm"
+            variant="mint"
             disabled={userPoints < offer.points || offer.comingSoon}
             className="w-full"
             onClick={(e) => {

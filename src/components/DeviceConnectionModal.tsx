@@ -116,6 +116,7 @@ export function DeviceConnectionModal({ isOpen, onClose }: DeviceConnectionModal
                 
                 <Button
                   size="sm"
+                  variant="mint"
                   disabled={!device.available}
                   onClick={() => handleConnect(device.id)}
                   className="ml-4"

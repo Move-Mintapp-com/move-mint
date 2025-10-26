@@ -162,9 +162,10 @@ export function ProfileEditModal({ isOpen, onClose, user }: ProfileEditModalProp
                 </p>
               </div>
 
-              <Button 
-                onClick={handleVerifyIdentity} 
-                className="w-full" 
+              <Button
+                onClick={handleVerifyIdentity}
+                variant="mint"
+                className="w-full"
                 size="lg"
                 disabled={!currentCredentials.username || !currentCredentials.password}
               >
@@ -187,9 +188,10 @@ export function ProfileEditModal({ isOpen, onClose, user }: ProfileEditModalProp
                 </p>
               </div>
               
-              <Button 
-                onClick={handleSendVerification} 
-                className="w-full" 
+              <Button
+                onClick={handleSendVerification}
+                variant="mint"
+                className="w-full"
                 size="lg"
               >
                 Send Verification Code
@@ -210,9 +212,10 @@ export function ProfileEditModal({ isOpen, onClose, user }: ProfileEditModalProp
                 </p>
               </div>
 
-              <Button 
-                onClick={handleVerifyCode} 
-                className="w-full" 
+              <Button
+                onClick={handleVerifyCode}
+                variant="mint"
+                className="w-full"
                 size="lg"
                 disabled={verificationCode.length !== 6}
               >
@@ -268,9 +271,10 @@ export function ProfileEditModal({ isOpen, onClose, user }: ProfileEditModalProp
                 </div>
               </div>
 
-              <Button 
-                onClick={handleSaveProfile} 
-                className="w-full" 
+              <Button
+                onClick={handleSaveProfile}
+                variant="mint"
+                className="w-full"
                 size="lg"
                 disabled={isVerifying}
               >

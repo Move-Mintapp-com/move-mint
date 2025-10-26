@@ -5,18 +5,20 @@ import { cva, type VariantProps } from "class-variance-authority@0.7.1";
 import { cn } from "./utils";
 
 const badgeVariants = cva(
-  "inline-flex items-center justify-center rounded-md border px-2 py-0.5 text-xs font-medium w-fit whitespace-nowrap shrink-0 [&>svg]:size-3 gap-1 [&>svg]:pointer-events-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive transition-[color,box-shadow] overflow-hidden",
+  "inline-flex items-center justify-center rounded-full border-none px-3 py-0.5 text-xs font-medium w-fit whitespace-nowrap shrink-0 [&>svg]:size-3 gap-1 [&>svg]:pointer-events-none transition-all duration-300 overflow-hidden backdrop-blur-[0.75em] [-webkit-backdrop-filter:blur(0.75em)] shadow-[0_0_0_0.1em_hsla(0,0%,100%,0.3)_inset]",
   {
     variants: {
       variant: {
         default:
-          "border-transparent bg-primary text-primary-foreground [a&]:hover:bg-primary/90",
+          "bg-[hsla(0,0%,100%,0.15)] text-primary [a&]:hover:bg-[hsla(0,0%,100%,0.25)]",
+        mint:
+          "bg-primary/20 text-white dark:text-white [a&]:hover:bg-primary/30",
         secondary:
-          "border-transparent bg-secondary text-secondary-foreground [a&]:hover:bg-secondary/90",
+          "bg-primary/20 text-white dark:text-white [a&]:hover:bg-primary/30",
         destructive:
-          "border-transparent bg-destructive text-white [a&]:hover:bg-destructive/90 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 dark:bg-destructive/60",
+          "bg-[hsla(0,0%,100%,0.15)] text-destructive [a&]:hover:bg-[hsla(0,0%,100%,0.25)]",
         outline:
-          "text-foreground [a&]:hover:bg-accent [a&]:hover:text-accent-foreground",
+          "bg-[hsla(0,0%,100%,0.1)] text-foreground [a&]:hover:bg-[hsla(0,0%,100%,0.2)] [a&]:hover:text-primary",
       },
     },
     defaultVariants: {

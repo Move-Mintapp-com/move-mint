@@ -244,11 +244,11 @@ export function HelpCenterModal({ isOpen, onClose }: HelpCenterModalProps) {
       <DialogContent className="w-[90%] max-w-md mx-auto bg-card border-border shadow-2xl backdrop-blur-none h-[80vh] max-h-[80vh] flex flex-col overflow-hidden">
         <DialogHeader className="text-left pb-4 border-b border-border">
           <DialogTitle className="text-xl text-white flex items-center gap-2">
-            <HelpCircle className="w-5 h-5 text-primary" />
+            <HelpCircle className="w-5 h-5 text-white" />
             Help Center
           </DialogTitle>
           <DialogDescription className="flex items-center gap-2 text-sm text-muted-foreground">
-            <Bot className="w-4 h-4 text-primary" />
+            <Bot className="w-4 h-4 text-white" />
             AI-Powered Support
           </DialogDescription>
         </DialogHeader>
@@ -302,7 +302,7 @@ export function HelpCenterModal({ isOpen, onClose }: HelpCenterModalProps) {
             {/* Chat Header */}
             <div className="flex items-center justify-between pb-3 border-b border-border">
               <div className="flex items-center gap-2">
-                <Bot className="w-5 h-5 text-primary" />
+                <Bot className="w-5 h-5 text-white" />
                 <span className="text-white">AI Assistant</span>
                 <Badge className="text-xs bg-green-500/20 text-green-400 border-green-400/30">
                   Online
@@ -327,7 +327,7 @@ export function HelpCenterModal({ isOpen, onClose }: HelpCenterModalProps) {
                 >
                   {chat.type === 'ai' && (
                     <div className="w-8 h-8 bg-primary/20 rounded-full flex items-center justify-center flex-shrink-0">
-                      <Bot className="w-4 h-4 text-primary" />
+                      <Bot className="w-4 h-4 text-white" />
                     </div>
                   )}
                   <div

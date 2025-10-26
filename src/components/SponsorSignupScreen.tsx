@@ -138,9 +138,9 @@ export function SponsorSignupScreen() {
           </div>
         </div>
         <div className="mt-4 flex flex-wrap gap-2">
-          <Badge variant="secondary">Geo-targeted promotions</Badge>
-          <Badge variant="secondary">Health-conscious audience</Badge>
-          <Badge variant="secondary">No upfront costs</Badge>
+          <Badge variant="mint">Geo-targeted promotions</Badge>
+          <Badge variant="mint">Health-conscious audience</Badge>
+          <Badge variant="mint">No upfront costs</Badge>
         </div>
       </Card>
 
@@ -293,9 +293,10 @@ export function SponsorSignupScreen() {
           </div>
         </Card>
 
-        <Button 
-          type="submit" 
-          className="w-full" 
+        <Button
+          type="submit"
+          variant="mint"
+          className="w-full"
           disabled={isSubmitting}
         >
           {isSubmitting ? 'Submitting Application...' : 'Submit Partnership Application'}

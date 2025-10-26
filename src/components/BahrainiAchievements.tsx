@@ -47,9 +47,9 @@ export function BahrainiAchievements({ currentSteps }: BahrainiAchievementsProps
         const progress = getProgress(achievement.steps);
 
         return (
-          <Card 
-            key={index} 
-            className={`p-4 ${achieved ? 'border-primary bg-primary/5' : ''}`}
+          <Card
+            key={index}
+            className={`p-4 ${achieved ? 'border-2 border-primary bg-primary/5' : ''}`}
           >
             <div className="flex items-start justify-between">
               <div className="flex items-start gap-3 flex-1">

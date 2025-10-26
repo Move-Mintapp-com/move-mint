@@ -30,10 +30,10 @@ export function AppHeader({ greeting, isDarkMode, onToggleDarkMode }: AppHeaderP
             className="relative p-2 hover:bg-white/10 rounded-full transition-colors group"
           >
             <HelpCircle className="w-5 h-5 text-white group-hover:text-primary transition-colors" />
-            <Badge 
+            <Badge
               className="absolute -top-1 -right-1 w-4 h-4 p-0 flex items-center justify-center text-xs bg-primary border-2 border-background"
             >
-              <Bot className="w-2 h-2" />
+              <Bot className="w-2 h-2 text-white" />
             </Badge>
           </button>
 

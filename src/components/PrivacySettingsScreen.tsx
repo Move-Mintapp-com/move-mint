@@ -15,7 +15,7 @@ interface PrivacySettingsScreenProps {
 
 export function PrivacySettingsScreen({ onBack, user }: PrivacySettingsScreenProps) {
   return (
-    <div className="min-h-screen pb-20">
+    <div className="min-h-screen pb-20 overflow-y-auto">
       {/* Header */}
       <div className="sticky top-0 z-10 bg-card/90 backdrop-blur-sm border-b border-border">
         <div className="flex items-center gap-4 p-4">

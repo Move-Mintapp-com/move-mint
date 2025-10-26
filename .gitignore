@@ -1,2 +1,6 @@
 node_modules
 CLAUDE.md
+.claude
+build
+example_container.tsx
+different_container.tsx

@@ -208,7 +208,7 @@ export function LeaderboardScreen() {
                   <p className="text-sm text-muted-foreground">Compete with friends and family</p>
                 </div>
               </div>
-              <Button size="sm" onClick={() => setShowAddFriendModal(true)}>Add</Button>
+              <Button size="sm" variant="mint" onClick={() => setShowAddFriendModal(true)}>Add</Button>
             </div>
           </Card>
 
