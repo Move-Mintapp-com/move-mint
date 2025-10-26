@@ -91,7 +91,7 @@ export function OnboardingFlow({ onComplete }: OnboardingFlowProps) {
           {/* Continue button */}
           <Button
             onClick={handleNext}
-            className="w-full bg-primary hover:bg-primary/90 text-primary-foreground"
+            className="w-full bg-primary hover:bg-primary/90 text-primary-foreground hover:text-primary-foreground"
           >
             {currentStepData.buttonText}
           </Button>

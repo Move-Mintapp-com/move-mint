@@ -188,10 +188,9 @@ export function AppTutorial({ onComplete, onSkip }: AppTutorialProps) {
             {/* Navigation */}
             <div className="flex items-center justify-between pt-4">
               <Button
-                variant="outline"
                 onClick={prevStep}
                 disabled={currentStep === 0}
-                className="flex items-center gap-2"
+                className="flex items-center gap-2 bg-black text-white hover:bg-black/90"
               >
                 <ChevronLeft className="w-4 h-4" />
                 Back
@@ -203,7 +202,7 @@ export function AppTutorial({ onComplete, onSkip }: AppTutorialProps) {
 
               <Button
                 onClick={nextStep}
-                className="flex items-center gap-2 bg-primary hover:bg-primary/90"
+                className="flex items-center gap-2 bg-primary text-primary-foreground hover:bg-primary/90 hover:text-primary-foreground"
               >
                 {currentStep === tutorialSteps.length - 1 ? 'Get Started' : 'Next'}
                 <ChevronRight className="w-4 h-4" />
