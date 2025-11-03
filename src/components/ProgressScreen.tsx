@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Card } from './ui/card';
+import { GlassCard } from './ui/glass-card';
 import { Progress } from './ui/progress';
 import { Badge } from './ui/badge';
 import { Button } from './ui/button';
@@ -190,21 +191,21 @@ export function ProgressScreen() {
           <TabsContent value="weekly" className="mt-6">
             {/* Weekly Summary */}
             <div className="grid grid-cols-3 gap-3 mb-6">
-              <Card className="p-4 text-center">
+              <GlassCard className="p-4 text-center">
                 <Target className="w-6 h-6 mx-auto mb-2 text-blue-500" />
                 <div className="text-lg">{totalSteps.toLocaleString()}</div>
                 <div className="text-xs text-muted-foreground">Total Steps</div>
-              </Card>
-              <Card className="p-4 text-center">
+              </GlassCard>
+              <GlassCard className="p-4 text-center">
                 <MapPin className="w-6 h-6 mx-auto mb-2 text-green-500" />
                 <div className="text-lg">{totalDistance.toFixed(1)}km</div>
                 <div className="text-xs text-muted-foreground">Distance</div>
-              </Card>
-              <Card className="p-4 text-center">
+              </GlassCard>
+              <GlassCard className="p-4 text-center">
                 <Flame className="w-6 h-6 mx-auto mb-2 text-orange-500" />
                 <div className="text-lg">{totalCalories}</div>
                 <div className="text-xs text-muted-foreground">Calories</div>
-              </Card>
+              </GlassCard>
             </div>
 
             {/* Daily Breakdown */}
@@ -237,27 +238,40 @@ export function ProgressScreen() {
 
           <TabsContent value="monthly" className="mt-6">
             <div className="space-y-4">
-              {monthlyGoals.map((goal, index) => (
-                <Card key={index} className="p-4">
-                  <div className="flex items-center justify-between mb-3">
-                    <div>
-                      <h4 className="flex items-center gap-2">
-                        <Trophy className="w-4 h-4 text-yellow-500" />
-                        {goal.title}
-                      </h4>
-                      <p className="text-sm text-muted-foreground">{goal.description}</p>
+              {monthlyGoals.map((goal, index) => {
+                const isCompleted = goal.progress >= 100;
+                const CardComponent = isCompleted ? GlassCard : Card;
+
+                // Calculate progressive opacity: 0 for first items, gradually increase to 0.3
+                const totalItems = monthlyGoals.length;
+                const backgroundOpacity = (index / totalItems) * 0.3;
+
+                return (
+                  <CardComponent
+                    key={index}
+                    className="p-4"
+                    {...(CardComponent === GlassCard && { backgroundOpacity })}
+                  >
+                    <div className="flex items-center justify-between mb-3">
+                      <div>
+                        <h4 className="flex items-center gap-2">
+                          <Trophy className="w-4 h-4 text-yellow-500" />
+                          {goal.title}
+                        </h4>
+                        <p className="text-sm text-muted-foreground">{goal.description}</p>
+                      </div>
+                      <Badge variant="outline">{goal.progress}%</Badge>
                     </div>
-                    <Badge variant="outline">{goal.progress}%</Badge>
-                  </div>
-                  <div className="space-y-2">
-                    <Progress value={goal.progress} className="h-3" />
-                    <div className="flex justify-between text-sm text-muted-foreground">
-                      <span>{goal.current}</span>
-                      <span>{goal.target}</span>
+                    <div className="space-y-2">
+                      <Progress value={goal.progress} className="h-3" />
+                      <div className="flex justify-between text-sm text-muted-foreground">
+                        <span>{goal.current}</span>
+                        <span>{goal.target}</span>
+                      </div>
                     </div>
-                  </div>
-                </Card>
-              ))}
+                  </CardComponent>
+                );
+              })}
             </div>
           </TabsContent>
 
@@ -267,38 +281,50 @@ export function ProgressScreen() {
 
           <TabsContent value="achievements" className="mt-6">
             <div className="space-y-4">
-              {achievements.map((achievement, index) => (
-                <Card key={index} className="p-4">
-                  <div className="flex items-center justify-between">
-                    <div className="flex-1">
-                      <div className="flex items-center gap-2 mb-1">
-                        <h4>{achievement.title}</h4>
-                        {achievement.completed && (
-                          <Badge className="bg-green-100 text-green-800">
-                            <Trophy className="w-3 h-3 mr-1" />
-                            Completed
-                          </Badge>
+              {achievements.map((achievement, index) => {
+                const CardComponent = achievement.completed ? GlassCard : Card;
+
+                // Calculate progressive opacity: 0 for first items, gradually increase to 0.3
+                const totalItems = achievements.length;
+                const backgroundOpacity = (index / totalItems) * 0.3;
+
+                return (
+                  <CardComponent
+                    key={index}
+                    className="p-4"
+                    {...(CardComponent === GlassCard && { backgroundOpacity })}
+                  >
+                    <div className="flex items-center justify-between">
+                      <div className="flex-1">
+                        <div className="flex items-center gap-2 mb-1">
+                          <h4>{achievement.title}</h4>
+                          {achievement.completed && (
+                            <Badge className="bg-green-100 text-green-800">
+                              <Trophy className="w-3 h-3 mr-1" />
+                              Completed
+                            </Badge>
+                          )}
+                        </div>
+                        <p className="text-sm text-muted-foreground mb-2">{achievement.description}</p>
+                        {achievement.progress && (
+                          <div className="space-y-2">
+                            <Progress
+                              value={(achievement.progress / achievement.total!) * 100}
+                              className="h-2"
+                            />
+                            <div className="text-xs text-muted-foreground">
+                              {achievement.progress}/{achievement.total} completed
+                            </div>
+                          </div>
                         )}
                       </div>
-                      <p className="text-sm text-muted-foreground mb-2">{achievement.description}</p>
-                      {achievement.progress && (
-                        <div className="space-y-2">
-                          <Progress 
-                            value={(achievement.progress / achievement.total!) * 100} 
-                            className="h-2" 
-                          />
-                          <div className="text-xs text-muted-foreground">
-                            {achievement.progress}/{achievement.total} completed
-                          </div>
-                        </div>
-                      )}
+                      <div className="text-right text-xs text-muted-foreground ml-4">
+                        {achievement.date}
+                      </div>
                     </div>
-                    <div className="text-right text-xs text-muted-foreground ml-4">
-                      {achievement.date}
-                    </div>
-                  </div>
-                </Card>
-              ))}
+                  </CardComponent>
+                );
+              })}
             </div>
           </TabsContent>
         </Tabs>

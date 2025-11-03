@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { StepCounter } from './StepCounter';
 import { Card } from './ui/card';
+import { GlassCard } from './ui/glass-card';
 import { Badge } from './ui/badge';
 import { CircularProgress } from './CircularProgress';
 import { BahrainiAchievements } from './BahrainiAchievements';
@@ -63,30 +64,30 @@ export function HomeScreen({ onNavigate }: HomeScreenProps) {
       {/* Quick Stats */}
       <div className="px-4 mt-6">
         <div className="grid grid-cols-3 gap-3">
-          <Card className="p-4 text-center border-border/50 bg-card/50 backdrop-blur-sm">
+          <GlassCard className="p-4 text-center">
             <CalendarDays className="w-6 h-6 mx-auto mb-2 text-primary" />
             <div className="text-lg text-white">7</div>
             <div className="text-xs text-muted-foreground">Day Streak</div>
-          </Card>
-          <Card className="p-4 text-center border-border/50 bg-card/50 backdrop-blur-sm">
+          </GlassCard>
+          <GlassCard className="p-4 text-center">
             <Flame className="w-6 h-6 mx-auto mb-2 text-primary" />
             <div className="text-lg text-white">{pointsEarned.toLocaleString()}</div>
             <div className="text-xs text-muted-foreground">Points</div>
-          </Card>
-          <Card className="p-4 text-center border-border/50 bg-card/50 backdrop-blur-sm">
+          </GlassCard>
+          <GlassCard className="p-4 text-center">
             <Target className="w-6 h-6 mx-auto mb-2 text-primary" />
             <div className="text-lg text-white">{progressPercent}%</div>
             <div className="text-xs text-muted-foreground">Goal Hit</div>
-          </Card>
+          </GlassCard>
         </div>
         
         {/* Calories Lost Card */}
         <div className="grid grid-cols-1 gap-3 mt-3">
-          <Card className="p-4 text-center border-border/50 bg-card/50 backdrop-blur-sm">
+          <GlassCard className="p-4 text-center">
             <Flame className="w-6 h-6 mx-auto mb-2 text-orange-400" />
             <div className="text-lg text-white">{Math.round((currentSteps / 1000) * 35)}</div>
             <div className="text-xs text-muted-foreground">Calories Burned</div>
-          </Card>
+          </GlassCard>
         </div>
       </div>
 
@@ -97,12 +98,12 @@ export function HomeScreen({ onNavigate }: HomeScreenProps) {
           <div className="flex justify-between gap-2">
             {weeklyStats.map((stat, index) => (
               <div key={stat.day} className="flex-1 text-center">
-                <div 
+                <div
                   className={`h-16 bg-white/10 rounded-lg mb-2 relative overflow-hidden ${
                     index === weeklyStats.length - 1 ? 'bg-primary/30' : ''
                   }`}
                 >
-                  <div 
+                  <div
                     className={`absolute bottom-0 left-0 right-0 rounded-lg transition-all ${
                       index === weeklyStats.length - 1 ? 'bg-primary' : 'bg-primary/70'
                     }`}
@@ -121,7 +122,7 @@ export function HomeScreen({ onNavigate }: HomeScreenProps) {
       <div className="px-4 mt-6">
         <div className="flex items-center justify-between mb-3">
           <h3 className="text-white">Friends Leaderboard</h3>
-          <button 
+          <button
             className="text-primary text-sm hover:text-primary/80 transition-colors"
             onClick={() => onNavigate?.('leaderboard')}
           >
