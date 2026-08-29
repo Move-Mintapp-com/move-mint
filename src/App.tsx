@@ -6,7 +6,9 @@ import MoveMintSite from './site/MoveMintSite';
    visitors to the website never download it. */
 const AppPrototype = lazy(() => import('./AppPrototype'));
 
-const isAppRoute = () => window.location.hash.startsWith('#app');
+const isAppRoute = () =>
+  window.location.hash.startsWith('#app') ||
+  window.location.pathname.replace(/\/+$/, '') === '/app';
 
 export default function App() {
   const [showApp, setShowApp] = useState(isAppRoute);

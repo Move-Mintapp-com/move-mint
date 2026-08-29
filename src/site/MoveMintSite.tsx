@@ -34,16 +34,26 @@ const NAV: Array<[PageId, string]> = [
   ['faq', 'FAQ'],
 ];
 
-function readHash(): PageId {
-  const id = (window.location.hash || '#home').slice(1) as PageId;
-  return id in PAGES ? id : 'home';
+/* Routes resolve from the real path first (/privacy), falling back to the
+   older hash form (#privacy) so any link already shared keeps working.
+   vercel.json rewrites every path to index.html, so deep links do not 404. */
+function readRoute(): PageId {
+  const path = window.location.pathname.replace(/^\/+|\/+$/g, '');
+  if (path && path in PAGES) return path as PageId;
+  const hash = window.location.hash.replace(/^#/, '');
+  if (hash && hash in PAGES) return hash as PageId;
+  return 'home';
+}
+
+function hrefFor(id: PageId) {
+  return id === 'home' ? '/' : '/' + id;
 }
 
 export default function MoveMintSite() {
-  const [page, setPage] = useState<PageId>(readHash);
+  const [page, setPage] = useState<PageId>(readRoute);
 
   useEffect(() => {
-    const onPop = () => setPage(readHash());
+    const onPop = () => setPage(readRoute());
     window.addEventListener('popstate', onPop);
     window.addEventListener('hashchange', onPop);
     return () => {
@@ -70,7 +80,10 @@ export default function MoveMintSite() {
   }, []);
 
   const navigate = useCallback((id: PageId) => {
-    if (readHash() !== id) window.history.pushState(null, '', '#' + id);
+    const target = hrefFor(id);
+    if (window.location.pathname !== target || window.location.hash) {
+      window.history.pushState(null, '', target);
+    }
     setPage(id);
   }, []);
 
@@ -92,7 +105,7 @@ export default function MoveMintSite() {
 
       <header className="nav">
         <div className="wrap nav-in">
-          <a className="wordmark" href="#home" data-go="home">
+          <a className="wordmark" href="/" data-go="home">
             <img src={wordmark} width={700} height={350} alt="Move-Mint" />
             <span>Steps to<br />Rewards</span>
           </a>
@@ -101,13 +114,13 @@ export default function MoveMintSite() {
               <a
                 key={id}
                 className={'navlink' + (page === id ? ' on' : '')}
-                href={'#' + id}
+                href={hrefFor(id)}
                 data-go={id}
               >
                 {label}
               </a>
             ))}
-            <a className="navlink navcta btn" href="#get" data-go="get" style={{ padding: '13px 24px' }}>
+            <a className="navlink navcta btn" href="/get" data-go="get" style={{ padding: '13px 24px' }}>
               Get the app
             </a>
           </nav>
@@ -122,7 +135,7 @@ export default function MoveMintSite() {
         <div className="wrap stack g40">
           <div className="fgrid">
             <div className="stack g16">
-              <a className="wordmark" href="#home" data-go="home">
+              <a className="wordmark" href="/" data-go="home">
                 <img src={wordmark} width={700} height={350} loading="lazy" alt="Move-Mint" />
               </a>
               <p className="sm" style={{ maxWidth: '36ch' }}>
@@ -131,20 +144,20 @@ export default function MoveMintSite() {
             </div>
             <div>
               <p className="lbl d" style={{ marginBottom: 10 }}>Walking</p>
-              <a className="flink" href="#how" data-go="how">How it works</a>
-              <a className="flink" href="#rewards" data-go="rewards">Rewards</a>
-              <a className="flink" href="#get" data-go="get">Get the app</a>
+              <a className="flink" href="/how" data-go="how">How it works</a>
+              <a className="flink" href="/rewards" data-go="rewards">Rewards</a>
+              <a className="flink" href="/get" data-go="get">Get the app</a>
             </div>
             <div>
               <p className="lbl d" style={{ marginBottom: 10 }}>Business</p>
-              <a className="flink" href="#partners" data-go="partners">Why partner</a>
-              <a className="flink" href="#apply" data-go="apply">Apply</a>
-              <a className="flink" href="#faq" data-go="faq">FAQ</a>
+              <a className="flink" href="/partners" data-go="partners">Why partner</a>
+              <a className="flink" href="/apply" data-go="apply">Apply</a>
+              <a className="flink" href="/faq" data-go="faq">FAQ</a>
             </div>
             <div>
               <p className="lbl d" style={{ marginBottom: 10 }}>Company</p>
-              <a className="flink" href="#about" data-go="about">About &amp; contact</a>
-              <a className="flink" href="#privacy" data-go="privacy">Privacy</a>
+              <a className="flink" href="/about" data-go="about">About &amp; contact</a>
+              <a className="flink" href="/privacy" data-go="privacy">Privacy</a>
               <a className="flink" href="mailto:info@move-mintapp.com">info@move-mintapp.com</a>
             </div>
           </div>

@@ -1,9 +1,11 @@
 import { useState, type FormEvent } from 'react';
+import { joinWaitlist } from './waitlist';
 import badge from '../assets/movemint-badge.png';
 import mascotHeart from '../assets/mascot-heart.png';
 
-/* No backend yet, so both forms compose a pre-filled email instead of
-   silently doing nothing. Swap for a real endpoint when one exists. */
+/* The launch waitlist posts straight to a list provider (see waitlist.ts) so
+   the visitor never leaves the page. The partner application is a long form
+   with no store behind it yet, so it still composes a pre-filled email. */
 const INBOX = 'info@move-mintapp.com';
 
 function openMail(subject: string, body: string) {
@@ -120,8 +122,8 @@ export function Home() {
                 cafés, restaurants, gyms and shops around Bahrain.
               </p>
               <div style={{ display: 'flex', gap: 14, flexWrap: 'wrap' }}>
-                <a className="btn" href="#get" data-go="get">Get the app</a>
-                <a className="btn ghost" href="#partners" data-go="partners">Partner with us</a>
+                <a className="btn" href="/get" data-go="get">Get the app</a>
+                <a className="btn ghost" href="/partners" data-go="partners">Partner with us</a>
               </div>
               <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
                 <span className="pill mint">10 steps = 1 point</span>
@@ -267,7 +269,7 @@ export function Home() {
             <div className="card ink lit-b stack g16" style={{ justifyContent: 'center' }}>
               <p className="lbl b">Partners</p>
               <h3 style={{ fontSize: 'var(--h3)' }}>Run one of these?</h3>
-              <a className="btn ghost" href="#partners" data-go="partners" style={{ alignSelf: 'flex-start' }}>
+              <a className="btn ghost" href="/partners" data-go="partners" style={{ alignSelf: 'flex-start' }}>
                 See the offer
               </a>
             </div>
@@ -285,7 +287,7 @@ export function Home() {
               We are finishing the Bahrain partner list now. Leave your email and
               we will tell you the day it opens.
             </p>
-            <a className="btn" href="#get" data-go="get">Join the list</a>
+            <a className="btn" href="/get" data-go="get">Join the list</a>
           </div>
         </div>
       </section>
@@ -364,7 +366,7 @@ export function How() {
             <h3 style={{ fontSize: 'var(--h3)' }}>Step counts, and nothing else</h3>
             <p className="sm">We read one number: steps. Not heart rate, not workouts, and no location
               today. It is never sold, and partners see a redemption code — never your health data.</p>
-            <a className="btn ghost" href="#privacy" data-go="privacy" style={{ alignSelf: 'flex-start' }}>
+            <a className="btn ghost" href="/privacy" data-go="privacy" style={{ alignSelf: 'flex-start' }}>
               Read the privacy page
             </a>
           </div>
@@ -483,8 +485,8 @@ export function Partners() {
             because yours is the one their points work at. You set the reward. You keep the customer.
           </p>
           <div style={{ display: 'flex', gap: 14, flexWrap: 'wrap' }}>
-            <a className="btn" href="#apply" data-go="apply">Apply to partner</a>
-            <a className="btn ghost" href="#faq" data-go="faq">Read the FAQ</a>
+            <a className="btn" href="/apply" data-go="apply">Apply to partner</a>
+            <a className="btn ghost" href="/faq" data-go="faq">Read the FAQ</a>
           </div>
         </div>
 
@@ -629,20 +631,56 @@ export function Apply() {
 
 /* ---------------- get the app ---------------- */
 
-export function Get() {
-  const [msg, setMsg] = useState('One email on launch day. Nothing else.');
-  const [sent, setSent] = useState(false);
+type JoinState = 'idle' | 'sending' | 'joined' | 'invalid' | 'error' | 'unconfigured';
 
-  const submit = (e: FormEvent<HTMLFormElement>) => {
+const JOIN_MESSAGE: Record<Exclude<JoinState, 'idle' | 'joined'>, string> = {
+  sending: 'Adding you…',
+  invalid: 'That address does not look right — check it and try again.',
+  error: 'Something went wrong at our end. Try again, or email info@move-mintapp.com.',
+  unconfigured: 'The list is not open yet. Email info@move-mintapp.com and we will add you.',
+};
+
+export function Get() {
+  const [email, setEmail] = useState('');
+  const [state, setState] = useState<JoinState>('idle');
+  const [trap, setTrap] = useState('');   // honeypot: bots fill it, people never see it
+
+  const submit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const email = fieldValue(e.currentTarget, 'early');
-    openMail(
-      'Add me to the Move-Mint launch list',
-      `Please let me know when Move-Mint launches.\n\nEmail: ${email}`,
-    );
-    setSent(true);
-    setMsg('Opening your email app — send it and you are on the list.');
+    if (state === 'sending') return;
+    if (trap) { setState('joined'); return; }   // silently drop bots
+    setState('sending');
+    const result = await joinWaitlist(email, 'website · get the app');
+    setState(result === 'ok' ? 'joined' : result);
   };
+
+  if (state === 'joined') {
+    return (
+      <section>
+        <div className="wrap grid hero-grid"
+          style={{ gridTemplateColumns: '1fr 1fr', gap: 'clamp(30px,5vw,70px)', alignItems: 'center' }}>
+          <div className="stack g28">
+            <p className="lbl">You are on the list</p>
+            <h1 className="null" style={{ fontSize: 'var(--display)' }}>
+              See you<br /><span className="neon">out there</span>
+            </h1>
+            <p className="lede">
+              We have got <strong style={{ color: 'var(--mint)' }}>{email.trim()}</strong>. You will
+              hear from us once, on the day Move-Mint opens in Bahrain — then it is over to your feet.
+            </p>
+            <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
+              <a className="btn ghost" href="/how" data-go="how">See how it works</a>
+              <a className="btn ghost" href="/partners" data-go="partners">Run a business?</a>
+            </div>
+          </div>
+          <div className="mascot-hero">
+            <img src={mascotHeart} width={746} height={1000} loading="lazy"
+              alt="The Move-Mint mascot holding a heart" />
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section>
@@ -665,10 +703,40 @@ export function Get() {
           >
             <div className="field">
               <label htmlFor="early">Email address</label>
-              <input id="early" type="email" placeholder="you@example.com" required />
+              <input
+                id="early"
+                type="email"
+                inputMode="email"
+                autoComplete="email"
+                placeholder="you@example.com"
+                value={email}
+                onChange={(e) => { setEmail(e.target.value); if (state !== 'idle') setState('idle'); }}
+                required
+              />
             </div>
-            <button className="btn" type="submit" style={{ alignSelf: 'flex-start' }}>Tell me at launch</button>
-            <span className="sm" style={sent ? { color: 'var(--mint)' } : undefined}>{msg}</span>
+            {/* honeypot — hidden from people, irresistible to bots */}
+            <input
+              type="text"
+              tabIndex={-1}
+              autoComplete="off"
+              aria-hidden="true"
+              value={trap}
+              onChange={(e) => setTrap(e.target.value)}
+              style={{ position: 'absolute', left: -9999, width: 1, height: 1, opacity: 0 }}
+            />
+            <button className="btn" type="submit" style={{ alignSelf: 'flex-start' }}
+              disabled={state === 'sending'}>
+              {state === 'sending' ? 'Adding you…' : 'Tell me at launch'}
+            </button>
+            <span
+              className="sm"
+              role={state === 'invalid' || state === 'error' ? 'alert' : undefined}
+              style={state === 'invalid' || state === 'error' ? { color: 'var(--blush)' } : undefined}
+            >
+              {state === 'idle'
+                ? 'One email on launch day. Nothing else.'
+                : JOIN_MESSAGE[state]}
+            </span>
           </form>
           <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
             <span className="pill">iOS · Apple Health</span>
