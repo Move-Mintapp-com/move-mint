@@ -1,114 +1,32 @@
-import { useState, useEffect } from 'react';
-import { BottomNavigation } from './components/BottomNavigation';
-import { HomeScreen } from './components/HomeScreen';
-import { ProgressScreen } from './components/ProgressScreen';
-import { ShopScreen } from './components/ShopScreen';
-import { ProfileScreen } from './components/ProfileScreen';
-import { LeaderboardScreen } from './components/LeaderboardScreen';
-import { SponsorSignupScreen } from './components/SponsorSignupScreen';
-import { AppHeader } from './components/AppHeader';
-import { SplashScreen } from './components/SplashScreen';
-import { OnboardingFlow } from './components/OnboardingFlow';
-import { AppTutorial } from './components/AppTutorial';
-import { EventNotification } from './components/EventNotification';
+import { Suspense, lazy, useEffect, useState } from 'react';
+import MoveMintSite from './site/MoveMintSite';
+
+/* The public marketing site is what move-mintapp.com serves.
+   The original in-app prototype is preserved at #app and is code-split, so
+   visitors to the website never download it. */
+const AppPrototype = lazy(() => import('./AppPrototype'));
+
+const isAppRoute = () => window.location.hash.startsWith('#app');
 
 export default function App() {
-  const [activeTab, setActiveTab] = useState('home');
-  const [showSplash, setShowSplash] = useState(true);
-  const [showTutorial, setShowTutorial] = useState(false);
-  const [showOnboarding, setShowOnboarding] = useState(false);
-  const [isDarkMode, setIsDarkMode] = useState(true);
-
-  const currentHour = new Date().getHours();
-  const getGreeting = () => {
-    if (currentHour >= 5 && currentHour < 12) return 'Good morning';
-    if (currentHour >= 12 && currentHour < 18) return 'Good afternoon';
-    return 'Good evening';
-  };
+  const [showApp, setShowApp] = useState(isAppRoute);
 
   useEffect(() => {
-    // Apply dark mode by default
-    document.documentElement.classList.toggle('dark', isDarkMode);
-    document.documentElement.classList.toggle('light', !isDarkMode);
-    
-    // Check if tutorial has been completed
-    const tutorialCompleted = localStorage.getItem('move-mint-tutorial');
-    const onboardingCompleted = localStorage.getItem('move-mint-onboarding');
-    
-    if (!tutorialCompleted) {
-      setShowTutorial(true);
-    } else if (!onboardingCompleted) {
-      setShowOnboarding(true);
-    }
-  }, [isDarkMode]);
+    const sync = () => setShowApp(isAppRoute());
+    window.addEventListener('hashchange', sync);
+    window.addEventListener('popstate', sync);
+    return () => {
+      window.removeEventListener('hashchange', sync);
+      window.removeEventListener('popstate', sync);
+    };
+  }, []);
 
-  const renderScreen = () => {
-    switch (activeTab) {
-      case 'home':
-        return <HomeScreen onNavigate={setActiveTab} />;
-      case 'progress':
-        return <ProgressScreen />;
-      case 'shop':
-        return <ShopScreen />;
-      case 'leaderboard':
-        return <LeaderboardScreen />;
-      case 'sponsor':
-        return <SponsorSignupScreen />;
-      case 'profile':
-        return <ProfileScreen isDarkMode={isDarkMode} onToggleDarkMode={() => setIsDarkMode(!isDarkMode)} />;
-      default:
-        return <HomeScreen onNavigate={setActiveTab} />;
-    }
-  };
-
-  if (showSplash) {
-    return <SplashScreen onComplete={() => setShowSplash(false)} isDarkMode={isDarkMode} />;
-  }
-
-  if (showTutorial) {
+  if (showApp) {
     return (
-      <AppTutorial 
-        onComplete={() => {
-          localStorage.setItem('move-mint-tutorial', 'completed');
-          setShowTutorial(false);
-          // Check if onboarding is also needed
-          const onboardingCompleted = localStorage.getItem('move-mint-onboarding');
-          if (!onboardingCompleted) {
-            setShowOnboarding(true);
-          }
-        }}
-        onSkip={() => {
-          localStorage.setItem('move-mint-tutorial', 'completed');
-          setShowTutorial(false);
-          // Check if onboarding is also needed
-          const onboardingCompleted = localStorage.getItem('move-mint-onboarding');
-          if (!onboardingCompleted) {
-            setShowOnboarding(true);
-          }
-        }}
-      />
+      <Suspense fallback={null}>
+        <AppPrototype />
+      </Suspense>
     );
   }
-
-  if (showOnboarding) {
-    return <OnboardingFlow onComplete={() => setShowOnboarding(false)} />;
-  }
-
-  return (
-    <div className="min-h-screen">
-      <div className="max-w-md mx-auto min-h-screen relative">
-        <AppHeader 
-          greeting={getGreeting()}
-          isDarkMode={isDarkMode}
-          onToggleDarkMode={() => setIsDarkMode(!isDarkMode)}
-        />
-        {renderScreen()}
-        <BottomNavigation 
-          activeTab={activeTab} 
-          onTabChange={setActiveTab} 
-        />
-        <EventNotification />
-      </div>
-    </div>
-  );
+  return <MoveMintSite />;
 }
