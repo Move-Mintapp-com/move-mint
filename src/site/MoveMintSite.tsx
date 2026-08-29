@@ -57,13 +57,15 @@ export default function MoveMintSite() {
     window.scrollTo({ top: 0, behavior: 'instant' as ScrollBehavior });
   }, [page]);
 
-  // Keep the app prototype's theme classes off this site, and paint the body
-  // so nothing shows through behind the fixed gradient.
+  // Keep the app prototype's theme classes off this site. Deliberately do NOT
+  // paint <body>: globals.css gives it a background, and any body background
+  // paints over the site's fixed z-index:-3 gradient. Clearing it lets the
+  // gradient show; index.html paints <html> for the pre-mount ground.
   useEffect(() => {
     const root = document.documentElement;
     root.classList.remove('light', 'dark');
     const prev = document.body.style.background;
-    document.body.style.background = '#06010b';
+    document.body.style.background = 'transparent';
     return () => { document.body.style.background = prev; };
   }, []);
 

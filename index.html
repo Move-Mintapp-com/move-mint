@@ -21,8 +21,10 @@
       href="https://fonts.googleapis.com/css2?family=Ovo&family=Poppins:wght@500;600;700;800;900&display=swap"
     />
     <style>
-      /* Paint the brand ground before React mounts, so there is no light flash. */
-      html, body { background: #06010b; }
+      /* Paint the brand ground before React mounts, so there is no light flash.
+         Only on <html>: giving <body> a background too would stop it propagating
+         to the canvas and make body paint over the site's z-index:-3 gradient. */
+      html { background: #06010b; }
     </style>
   </head>
 

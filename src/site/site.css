@@ -6,7 +6,10 @@
 
 .mm-site {--ink:#06010b; --deep:#2b0149; --purple:#3d0169; --mint:#84f2b4; --muted:#5f4d7d; --blush:#f1c7d9; --violet:#9d57d1; --s-deep:rgba(43,1,73,.66); --s-ink:rgba(6,1,11,.90); --line:rgba(255,255,255,.10); --line-mint:rgba(132,242,180,.38); --line-blush:rgba(241,199,217,.42); --line-violet:rgba(157,87,209,.48); --tx:#ffffff; --tx-body:rgba(255,255,255,.84); --tx-dim:rgba(255,255,255,.60); --tx-ink-body:rgba(255,255,255,.88); --tx-ink-dim:rgba(255,255,255,.66); --glow-a:.75; --glow-b:.38; --ring:.55; --display:clamp(2.9rem,7.4vw,6.5rem); --statement:clamp(2.9rem,6.6vw,5.4rem); --h2:clamp(2.1rem,4.2vw,3.3rem); --h3:1.55rem; --body:1.125rem; --lede:1.28rem; --maxw:1240px; --gut:clamp(20px,5vw,60px); --r:18px; color-scheme:dark;}
 .mm-site * {box-sizing:border-box}
-.mm-site {margin:0;background:var(--ink);color:var(--tx); font-family:"Ovo",Georgia,serif;font-size:var(--body);line-height:1.62; -webkit-font-smoothing:antialiased;overflow-x:hidden}
+/* No background here on purpose: .spine (z-index:-3) is a child, and a block
+   background paints over negative z-index children. In the original HTML this
+   lived on <body>, whose canvas paints first. index.html paints the ground. */
+.mm-site {margin:0;color:var(--tx); font-family:"Ovo",Georgia,serif;font-size:var(--body);line-height:1.62; -webkit-font-smoothing:antialiased;overflow-x:hidden}
 .mm-site .spine {position:fixed;inset:0;z-index:-3; background:linear-gradient(180deg,#06010b 0%,#2b0149 55%,#3d0169 100%)}
 .mm-site .spine::after {content:"";position:absolute;inset:0; background: radial-gradient(64rem 42rem at 78% 6%,rgba(157,87,209,.26),transparent 62%), radial-gradient(48rem 34rem at 10% 58%,rgba(132,242,180,.09),transparent 60%), radial-gradient(40rem 30rem at 92% 88%,rgba(241,199,217,.10),transparent 62%)}
 .mm-site .null {font-family:"Poppins",Arial,sans-serif;font-weight:900;text-transform:uppercase; letter-spacing:-.035em;line-height:.88;margin:0}
