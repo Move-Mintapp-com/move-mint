@@ -23,18 +23,34 @@ module.exports = async (req, res) => {
     return res.status(405).json({ error: 'method_not_allowed' });
   }
 
-  const key = process.env.MAILCHIMP_API_KEY;
-  const listId = process.env.MAILCHIMP_AUDIENCE_ID;
-  const status = process.env.MAILCHIMP_STATUS || 'subscribed';
+  // Trimmed: pasting into Vercel very often carries a trailing space or newline.
+  const env = (name) => (process.env[name] || '').trim();
+
+  const key = env('MAILCHIMP_API_KEY');
+  // Mailchimp calls it an Audience; its API and older docs say List. Accept both.
+  const listId = env('MAILCHIMP_AUDIENCE_ID') || env('MAILCHIMP_LIST_ID');
+  const status = env('MAILCHIMP_STATUS') || 'subscribed';
 
   if (!key || !listId) {
-    // Not wired up yet — the site shows "the list is not open yet".
-    return res.status(503).json({ error: 'unconfigured' });
+    // Say which one is absent. Names only — no values are ever echoed back.
+    const missing = [];
+    if (!key) missing.push('MAILCHIMP_API_KEY');
+    if (!listId) missing.push('MAILCHIMP_AUDIENCE_ID');
+    return res.status(503).json({
+      error: 'unconfigured',
+      missing,
+      hint: 'Set these in Vercel, then redeploy — variables only apply to builds made after they are added.',
+    });
   }
 
   // The data centre is the suffix of the API key: ...-us14
   const dc = key.split('-')[1];
-  if (!dc) return res.status(503).json({ error: 'malformed_key' });
+  if (!dc) {
+    return res.status(503).json({
+      error: 'malformed_key',
+      hint: 'The API key must end in a data-centre suffix such as -us14.',
+    });
+  }
 
   let body = req.body;
   if (typeof body === 'string') {
