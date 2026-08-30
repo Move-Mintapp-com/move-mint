@@ -39,12 +39,14 @@ module.exports = async (req, res) => {
     return res.status(503).json({
       error: 'unconfigured',
       missing,
-      // Diagnostics: variable NAMES the runtime can actually see, never values.
-      // Distinguishes "not injected at all" from "injected under another name".
-      seen: Object.keys(process.env).filter((k) => /MAIL|CHIMP/i.test(k)).sort(),
-      onVercel: Boolean(process.env.VERCEL),
+      // Diagnostics: names and value LENGTHS only — never the values themselves.
+      // A name present with length 0 means the variable exists in Vercel but
+      // its value was saved empty, which is invisible in the dashboard.
+      seen: Object.keys(process.env)
+        .filter((k) => /MAIL|CHIMP/i.test(k))
+        .sort()
+        .map((k) => `${k}:${(process.env[k] || '').trim().length}`),
       vercelEnv: process.env.VERCEL_ENV || null,
-      envCount: Object.keys(process.env).length,
       hint: 'Set these in Vercel, then redeploy — variables only apply to builds made after they are added.',
     });
   }
