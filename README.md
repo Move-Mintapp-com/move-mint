@@ -53,3 +53,38 @@
   - Updated all Context.Provider patterns to React 19's simplified Context syntax
   - Added TypeScript configuration
   - Updated all dependencies to latest stable versions
+
+## Launch waitlist
+
+The **Get the app** page posts to `/api/waitlist`, a Vercel serverless
+function that adds the address to the Mailchimp audience. It runs
+server-side so the API key is never exposed to the browser — Mailchimp
+also refuses requests made directly from a web page.
+
+Set these in **Vercel → Settings → Environment Variables**, with the
+**Production** environment ticked:
+
+| Variable | Where to find it |
+| --- | --- |
+| `MAILCHIMP_API_KEY` | Mailchimp → Account → Extras → API keys. Must keep its data-centre suffix, e.g. `…-us14`. |
+| `MAILCHIMP_AUDIENCE_ID` | Mailchimp → Audience → Settings → Audience name and defaults. `MAILCHIMP_LIST_ID` also works. |
+| `MAILCHIMP_STATUS` | Optional. `subscribed` (default) or `pending` for double opt-in. |
+
+**Environment variables are captured when a deployment is built.** Adding
+or editing one does not affect the deployment already running — redeploy
+afterwards, or push a commit.
+
+To check what production can actually see:
+
+```bash
+curl -X POST -H "Content-Type: application/json" \
+  -d '{"email":"test@example.com"}' \
+  https://move-mintapp.com/api/waitlist
+```
+
+| Response | Meaning |
+| --- | --- |
+| `{"ok":true}` | Working. The address is in the audience. |
+| `{"error":"unconfigured","missing":[…]}` | Those variables are not reaching Production. |
+| `{"error":"malformed_key"}` | The key lost its `-us14` suffix. |
+| `{"error":"rejected"}` | Mailchimp refused that address. |
