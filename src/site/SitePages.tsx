@@ -57,10 +57,10 @@ function note(n: number) {
   if (n < 3000) return 'A desk day. The points still land.';
   if (n < 4000) return 'Just under the Bahrain average.';
   if (n < 6000) return 'Right in the national middle: 4,000 to 6,000 a day.';
-  if (n === 6000) return '6,000 steps is one lap of the Corniche — and 600 points.';
+  if (n === 6000) return '6,000 steps is a normal day in Bahrain — and 600 points.';
   if (n < 10000) return 'Above average. This is a walk you chose to take.';
   if (n < 15000) return 'A strong day. Roughly a coffee every two days.';
-  return 'That is a lot of Corniche.';
+  return 'That is a serious day on your feet.';
 }
 
 const MIN = 500;
@@ -179,7 +179,7 @@ export function Home() {
             </div>
             <div className="card ink stack g12">
               <h3 style={{ fontSize: 'var(--h3)' }}>Walk your day</h3>
-              <p className="sm">The commute, the Souq, the school run. Your phone is already counting.</p>
+              <p className="sm">Errands, work, the school run. It all counts on its own.</p>
             </div>
             <div className="card pink stack g12">
               <h3 style={{ fontSize: 'var(--h3)' }}>Collect points</h3>
@@ -203,8 +203,7 @@ export function Home() {
               4,000&ndash;6,000
             </p>
             <p style={{ fontSize: '1.24rem', color: 'rgba(61,1,105,.88)' }}>
-              steps is what the average person in Bahrain already walks in a day —
-              up to 600 points, before changing a thing.
+              steps is what the average person in Bahrain already walks in a day — and now that walking gets rewarded.
             </p>
           </div>
           <div className="card ink lit stack g20" style={{ justifyContent: 'center' }}>
@@ -213,8 +212,7 @@ export function Home() {
               <span className="neon">10&nbsp;:&nbsp;1</span>
             </p>
             <p className="lede">
-              Ten steps, one point. It never changes with tiers, streaks or the time of day —
-              so you always know what a walk is worth.
+              Ten steps, one point. The rate never changes, so you always know what your walking is worth.
             </p>
           </div>
         </div>
@@ -235,21 +233,18 @@ export function Home() {
                 <path d="M7 3v8M10 3v8M13 3v5a3 3 0 0 1-3 3M17 3c-2 3-2 5-2 7h4c0-2 0-4-2-7zM17 10v11M10 11v10" />
               </svg>
               <h3 style={{ fontSize: 'var(--h3)' }}>Cafés</h3>
-              <p className="sm">Coffee at the end of the walk, part-paid by the walk.</p>
             </div>
             <div className="card ink stack g16">
               <svg className="icon" viewBox="0 0 24 24">
                 <path d="M4 9h16v11H4zM4 9l2-5h12l2 5M9 20v-6h6v6" />
               </svg>
               <h3 style={{ fontSize: 'var(--h3)' }}>Healthy restaurants</h3>
-              <p className="sm">Places that fit the point of the app, not the ones that fight it.</p>
             </div>
             <div className="card pink stack g16">
               <svg className="icon" viewBox="0 0 24 24">
                 <path d="M3 12h18M6 8v8M18 8v8M9 6v12M15 6v12" />
               </svg>
               <h3 style={{ fontSize: 'var(--h3)' }}>Gyms &amp; studios</h3>
-              <p className="sm">Classes, day passes and memberships priced partly in steps.</p>
             </div>
             <div className="card ink stack g16">
               <svg className="icon" viewBox="0 0 24 24">
@@ -257,14 +252,12 @@ export function Home() {
                 <path d="M9.5 15.5L19 5M14.5 15.5L5 5" />
               </svg>
               <h3 style={{ fontSize: 'var(--h3)' }}>Salons</h3>
-              <p className="sm">The appointment you were booking anyway, for fewer dinars.</p>
             </div>
             <div className="card lit-v stack g16">
               <svg className="icon" viewBox="0 0 24 24">
                 <path d="M6 2h12l2 6H4zM5 8v14h14V8M10 12h4" />
               </svg>
               <h3 style={{ fontSize: 'var(--h3)' }}>Everyday shops</h3>
-              <p className="sm">Groceries, pharmacies and the small places on your street.</p>
             </div>
             <div className="card ink lit-b stack g16" style={{ justifyContent: 'center' }}>
               <p className="lbl b">Partners</p>
@@ -284,8 +277,7 @@ export function Home() {
             <p className="lbl">Coming soon</p>
             <h2 className="null" style={{ fontSize: 'var(--statement)' }}>Be walking on<br />day one</h2>
             <p className="lede" style={{ textAlign: 'center', maxWidth: '46ch' }}>
-              We are finishing the Bahrain partner list now. Leave your email and
-              we will tell you the day it opens.
+              We are adding the finishing touches now. Leave your email and we will tell you the day it opens.
             </p>
             <a className="btn" href="/get" data-go="get">Join the list</a>
           </div>
@@ -308,8 +300,7 @@ export function How() {
           </h1>
           <p className="lede">
             Move-Mint does not ask you to log anything, wear anything, or walk further than you
-            already do. It reads the step count your phone keeps anyway, converts it at a fixed
-            rate, and lets you spend the result.
+            already do. It reads the step count your phone keeps anyway, converts it at a fixed rate, and lets you spend the result. If you wear a Whoop, an Ultrahuman ring, a Garmin or any other tracker, connect it to Apple Health or Health Connect — everything it records then reaches Move-Mint too.
           </p>
         </div>
 
@@ -326,7 +317,7 @@ export function How() {
           </div>
           <div className="card pink stack g12">
             <h3 style={{ fontSize: 'var(--h3)' }}>Earn</h3>
-            <p className="sm">10 steps become 1 point, every day, with no cap and no tiers to unlock first.</p>
+            <p className="sm">Every 10 steps becomes 1 point. No daily limit, and no levels to unlock first.</p>
           </div>
           <div className="card lit-v stack g12">
             <h3 style={{ fontSize: 'var(--h3)' }}>Redeem</h3>
@@ -345,7 +336,7 @@ export function How() {
               <tbody>
                 <tr><td><strong>A quiet desk day</strong></td><td className="num">2,800</td><td className="num">280</td><td>Errands and lunch</td></tr>
                 <tr><td><strong>An average Bahrain day</strong></td><td className="num">4,000&ndash;6,000</td><td className="num">400&ndash;600</td><td>The national middle</td></tr>
-                <tr><td><strong>One lap of the Corniche</strong></td><td className="num">6,000</td><td className="num">600</td><td>The default daily goal</td></tr>
+                <tr><td><strong>Hitting the daily goal</strong></td><td className="num">6,000</td><td className="num">600</td><td>The default daily goal</td></tr>
                 <tr><td><strong>A walk plus a shopping trip</strong></td><td className="num">10,400</td><td className="num">1,040</td><td>A strong day</td></tr>
                 <tr><td><strong>A month of hitting goal</strong></td><td className="num">180,000</td><td className="num">18,000</td><td>Thirty days at 6,000</td></tr>
               </tbody>
@@ -515,7 +506,7 @@ export function Partners() {
           <div className="card ink lit stack g16">
             <span className="pill mint" style={{ alignSelf: 'flex-start' }}>What you provide</span>
             <ul className="sm" style={{ margin: 0, paddingLeft: 22, lineHeight: 2 }}>
-              <li>One reward, and the rules around it</li>
+              <li>One reward minimum, and the rules around it</li>
               <li>Staff who can accept a redemption code</li>
               <li>Your listing details — name, area and hours</li>
             </ul>
@@ -523,9 +514,9 @@ export function Partners() {
           <div className="card pink stack g16">
             <span className="pill pinkp" style={{ alignSelf: 'flex-start' }}>What you get</span>
             <ul className="sm" style={{ margin: 0, paddingLeft: 22, lineHeight: 2 }}>
-              <li>A listing with your area and category</li>
-              <li>Redemption counts, by day and by reward</li>
-              <li>A place in the carousel when you launch</li>
+              <li>Frequent customers who are already out walking</li>
+              <li>Marketing on our platforms, with your logo alongside ours</li>
+              <li>An introduction to our users when you go live on the app</li>
             </ul>
           </div>
         </div>
@@ -536,11 +527,11 @@ export function Partners() {
             <div className="card ink lit stack g12"><h3 style={{ fontSize: 'var(--h3)' }}>Apply</h3>
               <p className="sm">Send the form. It takes about two minutes.</p></div>
             <div className="card ink stack g12"><h3 style={{ fontSize: 'var(--h3)' }}>Talk it through</h3>
-              <p className="sm">We agree the reward and terms that suit your margins.</p></div>
+              <p className="sm">We talk through any questions you have.</p></div>
             <div className="card pink stack g12"><h3 style={{ fontSize: 'var(--h3)' }}>Get set up</h3>
               <p className="sm">Your listing is built and your staff get access to redemptions.</p></div>
             <div className="card lit-v stack g12"><h3 style={{ fontSize: 'var(--h3)' }}>Go live</h3>
-              <p className="sm">Your listing appears and users in your area are told.</p></div>
+              <p className="sm">Your listing goes live on the app.</p></div>
           </div>
         </div>
       </div>
