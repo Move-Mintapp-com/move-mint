@@ -823,26 +823,12 @@ export function About() {
             everyone&rsquo;s pocket, and the local businesses who want people through the door.</p>
         </div>
 
-        <div className="grid c3">
-          <div className="card ink lit stack g12">
-            <p className="lbl">Founder</p>
-            <h3 style={{ fontSize: 'var(--h3)' }}>Norhan Hani</h3>
-            <p className="sm">Move-Mint W.L.L., Bahrain</p>
-          </div>
-          <div className="card pink stack g12">
-            <p className="lbl">Email</p>
-            <h3 style={{ fontSize: '1.2rem' }}>
-              <a href="mailto:info@move-mintapp.com" style={{ textDecoration: 'none' }}>info@move-mintapp.com</a>
-            </h3>
-            <p className="sm">Partnerships, press and brand files</p>
-          </div>
-          <div className="card lit-v stack g12">
-            <p className="lbl v">Phone</p>
-            <h3 style={{ fontSize: 'var(--h3)' }}>
-              <a href="tel:+97334077656" style={{ textDecoration: 'none' }}>3407 7656</a>
-            </h3>
-            <p className="sm">Sunday to Thursday</p>
-          </div>
+        <div className="card pink stack g12">
+          <p className="lbl">Email</p>
+          <h3 style={{ fontSize: '1.2rem' }}>
+            <a href="mailto:info@move-mintapp.com" style={{ textDecoration: 'none' }}>info@move-mintapp.com</a>
+          </h3>
+          <p className="sm">Partnerships, press and brand files</p>
         </div>
 
         <div className="card ink lit stack g16">
